@@ -1,602 +1,247 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Content Planning - Return to Quran</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        .planning-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .planning-header {
-            text-align: center;
-            margin-bottom: 3rem;
-            padding: 2rem;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            color: white;
-            border-radius: 12px;
-        }
-
-        .planning-header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .planning-header p {
-            font-size: 1.2rem;
-            opacity: 0.95;
-        }
-
-        .planning-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .phase-card {
-            background: var(--bg-secondary);
-            border-radius: 12px;
-            padding: 2rem;
-            border: 2px solid var(--border-color);
-            box-shadow: var(--shadow-md);
-        }
-
-        .phase-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid var(--accent-primary);
-        }
-
-        .phase-number {
-            background: var(--accent-primary);
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .phase-title {
-            flex: 1;
-        }
-
-        .phase-title h2 {
-            color: var(--accent-primary);
-            font-size: 1.5rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .phase-title p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .topic-list {
-            list-style: none;
-        }
-
-        .topic-item {
-            padding: 1rem;
-            margin-bottom: 0.75rem;
-            background: var(--bg-tertiary);
-            border-radius: 8px;
-            border-left: 3px solid var(--accent-secondary);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .topic-item:hover {
-            transform: translateX(5px);
-            border-left-color: var(--accent-primary);
-            box-shadow: var(--shadow-md);
-        }
-
-        .topic-title {
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .topic-description {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        .topic-ayahs {
-            margin-top: 0.5rem;
-            font-size: 0.85rem;
-            color: var(--accent-primary);
-            font-style: italic;
-        }
-
-        .notes-section {
-            background: var(--bg-secondary);
-            padding: 2rem;
-            border-radius: 12px;
-            border: 2px solid var(--accent-primary);
-            margin-top: 2rem;
-        }
-
-        .notes-section h3 {
-            color: var(--accent-primary);
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .notes-section textarea {
-            width: 100%;
-            min-height: 150px;
-            padding: 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-family: var(--font-english);
-            font-size: 1rem;
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            resize: vertical;
-        }
-
-        .notes-section textarea:focus {
-            outline: none;
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 0 3px rgba(44, 95, 45, 0.1);
-        }
-
-        .flow-diagram {
-            background: var(--bg-secondary);
-            padding: 2rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            border: 2px solid var(--border-color);
-        }
-
-        .flow-diagram h3 {
-            color: var(--accent-primary);
-            margin-bottom: 1.5rem;
-            text-align: center;
-            font-size: 1.5rem;
-        }
-
-        .flow-steps {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .flow-step {
-            background: var(--bg-tertiary);
-            padding: 1.5rem;
-            border-radius: 8px;
-            border-left: 4px solid var(--accent-primary);
-            position: relative;
-        }
-
-        .flow-step::after {
-            content: '↓';
-            position: absolute;
-            bottom: -1.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 2rem;
-            color: var(--accent-primary);
-        }
-
-        .flow-step:last-child::after {
-            content: '';
-        }
-
-        .flow-step-number {
-            background: var(--accent-primary);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 0.5rem;
-        }
-
-        .flow-step-title {
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-
-        .flow-step-desc {
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        .back-button {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            background: var(--accent-primary);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            margin-bottom: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .back-button:hover {
-            background: var(--accent-secondary);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        @media (max-width: 968px) {
-            .planning-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .planning-header h1 {
-                font-size: 1.8rem;
-            }
-
-            .flow-steps {
-                padding: 0 1rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Overview - Return to Quran</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Inter:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Amiri+Quran&family=Scheherazade+New:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    .overview {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem;
+      padding-bottom: 3rem;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      position: sticky;
+      top: 0;
+      background: var(--bg-primary);
+      padding: 0.75rem 0;
+      z-index: 10;
+    }
+    .back-link {
+      display: inline-block;
+      padding: 0.6rem 0.9rem;
+      border-radius: 10px;
+      text-decoration: none;
+      background: var(--accent-primary);
+      color: white;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    .lang-toggle {
+      display: flex;
+      gap: 0.4rem;
+      background: var(--bg-tertiary);
+      padding: 0.25rem;
+      border-radius: 10px;
+    }
+    .lang-toggle button {
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      padding: 0.5rem 0.8rem;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .lang-toggle button.active {
+      background: var(--accent-primary);
+      color: white;
+    }
+    .hero {
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      color: white;
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin: 0.5rem 0 1rem;
+      box-shadow: var(--shadow-md);
+    }
+    .hero h1 {
+      font-size: 1.4rem;
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+    }
+    .hero p {
+      opacity: 0.95;
+      line-height: 1.7;
+    }
+    .ur {
+      font-family: var(--font-urdu);
+      direction: rtl;
+      text-align: right;
+      line-height: 2;
+    }
+    .card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1rem;
+      margin-bottom: 0.85rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .card-title {
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 0.4rem;
+      font-size: 1.05rem;
+    }
+    .card-sub {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      font-size: 0.98rem;
+    }
+    .muted {
+      color: var(--text-tertiary);
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+    }
+  </style>
 </head>
 <body>
-    <div class="planning-container">
-        <a href="index.html" class="back-button">← Back to Main Presentation</a>
-
-        <div class="planning-header">
-            <h1>Content Planning & Logical Sequence</h1>
-            <p>Building a Progressive Path to Understanding the Quran</p>
-            <p style="font-family: var(--font-urdu); font-size: 1.3rem; margin-top: 0.5rem;">
-                قرآن کو سمجھنے کے لیے ترقی پسند راستہ بنانا
-            </p>
-        </div>
-
-        <div class="flow-diagram">
-            <h3>The Logical Ladder - Sequential Understanding</h3>
-            <div class="flow-steps">
-                <div class="flow-step">
-                    <span class="flow-step-number">Step 1: AWAKENING</span>
-                    <div class="flow-step-title">Wake Them Up - Life is Short, Hereafter is Forever</div>
-                    <div class="flow-step-desc">
-                        <strong>Goal:</strong> Make them realize they're wasting their life on dunya (worldly pursuits)<br>
-                        <strong>Key Message:</strong> On Day of Judgment, they'll feel like they lived only a day or an hour. We're given enough time - are we using it to know Allah?<br>
-                        <strong>Possible Ayahs:</strong> 
-                        - 10:45 (felt like they stayed an hour)<br>
-                        - 30:55 (swear they stayed but a moment)<br>
-                        - 79:46 (as if they stayed an evening or morning)<br>
-                        - 35:37 (did We not give you life long enough?)<br>
-                        - 23:112-115 (how long did you stay? A day or part of a day)
-                    </div>
-                </div>
-
-                <div class="flow-step">
-                    <span class="flow-step-number">Step 2: PURPOSE</span>
-                    <div class="flow-step-title">Why Are We Here? What is Success?</div>
-                    <div class="flow-step-desc">
-                        <strong>Goal:</strong> Establish that we're created to worship Allah and be tested<br>
-                        <strong>Key Message:</strong> Success is not wealth/status - it's following Allah's guidance<br>
-                        <strong>Possible Ayahs:</strong>
-                        - 51:56 (created to worship)<br>
-                        - 67:2 (created to test who is best in deeds)<br>
-                        - 103:1-3 (time, loss, except those who believe AND do good)<br>
-                        - 18:7 (test which is best in deeds)
-                    </div>
-                </div>
-
-                <div class="flow-step">
-                    <span class="flow-step-number">Step 3: THE GUIDE</span>
-                    <div class="flow-step-title">The Quran - Our ONLY Guidance</div>
-                    <div class="flow-step-desc">
-                        <strong>Goal:</strong> Establish Quran as complete, sufficient, and ONLY source<br>
-                        <strong>Key Message:</strong> Quran is fully detailed, nothing is missing, no other source needed<br>
-                        <strong>Possible Ayahs:</strong>
-                        - 6:114 (shall I seek other than Allah as judge when He sent you the detailed Book?)<br>
-                        - 6:38 (We have not neglected anything in the Book)<br>
-                        - 16:89 (explanation for everything, guidance, mercy)<br>
-                        - 12:111 (detailed explanation of everything)<br>
-                        - 45:6 (these are Allah's verses, what hadith after Allah will they believe?)
-                    </div>
-                </div>
-
-                <div class="flow-step">
-                    <span class="flow-step-number">Step 4: COMMAND TO THINK</span>
-                    <div class="flow-step-title">Don't Be Like Your Fathers - Use Your Brain!</div>
-                    <div class="flow-step-desc">
-                        <strong>Goal:</strong> Break the cycle of blind following<br>
-                        <strong>Key Message:</strong> Allah gave you intellect - use it! Don't blindly follow traditions<br>
-                        <strong>Possible Ayahs:</strong>
-                        - 2:170 (we found our fathers upon a way)<br>
-                        - 5:104 (what? Even if your fathers understood nothing?)<br>
-                        - 43:22-24 (we follow our forefathers)<br>
-                        - 47:24 (do they not ponder over Quran?)<br>
-                        - 4:82 (do they not contemplate the Quran?)<br>
-                        - 8:22 (worst of creatures are deaf and dumb who don't use reason)
-                    </div>
-                </div>
-
-                <div class="flow-step">
-                    <span class="flow-step-number">Step 5: HISTORY LESSON</span>
-                    <div class="flow-step-title">We're Repeating Past Mistakes - Era of Jahiliyyah</div>
-                    <div class="flow-step-desc">
-                        <strong>Goal:</strong> Show how previous nations elevated their prophets - we're doing the same<br>
-                        <strong>Key Message:</strong> Christians said Esa is son of God, Jews said Uzair is son of God - we're making Muhammad (PBUH) into something he's not<br>
-                        <strong>Possible Ayahs:</strong>
-                        - 9:30-31 (Jews/Christians took prophets as lords)<br>
-                        - 5:116-117 (Esa will deny being worshipped)<br>
-                        - 3:79-80 (no prophet would say worship me)<br>
-                        - 18:110 (I am only a human like you)
-                    </div>
-                </div>
-
-                <div class="flow-step">
-                    <span class="flow-step-number">Step 6: TRUE FAITH</span>
-                    <div class="flow-step-title">Faith is NOT Just Words - It's Heart + Action</div>
-                    <div class="flow-step-desc">
-                        <strong>Goal:</strong> Destroy the "just say shahada" mentality<br>
-                        <strong>Key Message:</strong> Saying "La ilaha illallah" means nothing if heart and actions don't align<br>
-                        <strong>Possible Ayahs:</strong>
-                        - 2:8 (people say we believe but they're not believers)<br>
-                        - 49:14 (say "we submitted" not "we believe" - faith hasn't entered your hearts)<br>
-                        - 29:2-3 (do people think they'll be left alone by saying "we believe"?)<br>
-                        - 2:177 (true righteousness is not turning faces east/west)
-                    </div>
-                </div>
-
-                <div class="flow-step">
-                    <span class="flow-step-number">Step 7: SHIRK TODAY</span>
-                    <div class="flow-step-title">Modern Shirk - Calling on Dead, Intercession, Hadith</div>
-                    <div class="flow-step-desc">
-                        <strong>Goal:</strong> Identify specific shirk practices<br>
-                        <strong>Key Message:</strong> Calling on Prophet/saints, following hadith over Quran, sectarianism = shirk<br>
-                        <strong>Possible Ayahs:</strong>
-                        - 10:106 (don't call upon what can't help you)<br>
-                        - 46:5-6 (who more astray than one who calls besides Allah)<br>
-                        - 35:13-14 (those you call won't hear, and if they heard they can't respond)<br>
-                        - 39:43-44 (all intercession belongs to Allah alone)
-                    </div>
-                </div>
-
-                <div class="flow-step">
-                    <span class="flow-step-number">Step 8: SECTARIANISM</span>
-                    <div class="flow-step-title">No Sunni, No Shia - Only Muslim</div>
-                    <div class="flow-step-desc">
-                        <strong>Goal:</strong> Reject all sectarian labels<br>
-                        <strong>Key Message:</strong> Division is explicitly forbidden - Allah will deal with those who divide<br>
-                        <strong>Possible Ayahs:</strong>
-                        - 6:159 (those who divide their religion, you have nothing to do with them)<br>
-                        - 30:31-32 (be not among polytheists who split religion into sects)<br>
-                        - 3:103 (hold fast to rope of Allah together, don't be divided)<br>
-                        - 42:13-14 (establish religion and don't be divided in it)
-                    </div>
-                </div>
-
-                <div class="flow-step">
-                    <span class="flow-step-number">Step 9: PRACTICAL ISSUES</span>
-                    <div class="flow-step-title">Specific Topics - Salah, Food, Women, etc.</div>
-                    <div class="flow-step-desc">
-                        <strong>Goal:</strong> Address specific misconceptions now that foundation is built<br>
-                        <strong>Key Message:</strong> Everything we need is in Quran - let's see what it ACTUALLY says<br>
-                        <strong>Topics:</strong>
-                        - Salah times and method from Quran<br>
-                        - Halal/Haram - what Allah actually prohibited<br>
-                        - Women's rights from Quran vs culture<br>
-                        - Marriage, divorce, inheritance<br>
-                        - Fasting, Zakat, Hajj from Quran
-                    </div>
-                </div>
-
-                <div class="flow-step">
-                    <span class="flow-step-number">Step 10: THE PATH FORWARD</span>
-                    <div class="flow-step-title">How to Study Quran & Live by It</div>
-                    <div class="flow-step-desc">
-                        <strong>Goal:</strong> Give them tools to continue the journey<br>
-                        <strong>Key Message:</strong> Tafsir Quran bil Quran - let Quran explain Quran<br>
-                        <strong>Content:</strong>
-                        - How to study Quran properly<br>
-                        - Cross-referencing topics<br>
-                        - Avoiding sectarian translations<br>
-                        - Living by Quran daily<br>
-                        - Inviting others with wisdom (16:125)
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="planning-grid">
-            <div class="phase-card">
-                <div class="phase-header">
-                    <div class="phase-number">1</div>
-                    <div class="phase-title">
-                        <h2>Foundation Phase</h2>
-                        <p>Wake them up & establish basics</p>
-                    </div>
-                </div>
-                <ul class="topic-list">
-                    <li class="topic-item">
-                        <div class="topic-title">⏰ Life is Short - Don't Waste It</div>
-                        <div class="topic-description">
-                            On DoJ they'll feel they lived only a day. Allah gave us enough time - are we thinking about Him or chasing dunya?
-                        </div>
-                        <div class="topic-ayahs">Ayahs: 10:45, 30:55, 35:37, 79:46, 23:112-115</div>
-                    </li>
-                    <li class="topic-item">
-                        <div class="topic-title">🎯 Why Were We Created?</div>
-                        <div class="topic-description">
-                            We're created to worship Allah and be tested. Success = following His guidance, not worldly gains.
-                        </div>
-                        <div class="topic-ayahs">Ayahs: 51:56, 67:2, 103:1-3, 18:7</div>
-                    </li>
-                    <li class="topic-item">
-                        <div class="topic-title">📖 Quran is Complete & Sufficient</div>
-                        <div class="topic-description">
-                            Quran is fully detailed, nothing missing, no other source needed. What hadith after Allah will you believe?
-                        </div>
-                        <div class="topic-ayahs">Ayahs: 6:38, 6:114, 16:89, 12:111, 45:6</div>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="phase-card">
-                <div class="phase-header">
-                    <div class="phase-number">2</div>
-                    <div class="phase-title">
-                        <h2>Breaking Chains</h2>
-                        <p>Challenge blind following</p>
-                    </div>
-                </div>
-                <ul class="topic-list">
-                    <li class="topic-item">
-                        <div class="topic-title">🧠 Use Your Brain - Don't Follow Blindly</div>
-                        <div class="topic-description">
-                            Allah commands us to think and ponder. Don't follow fathers/traditions without questioning.
-                        </div>
-                        <div class="topic-ayahs">Ayahs: 2:170, 5:104, 43:22-24, 47:24, 4:82</div>
-                    </li>
-                    <li class="topic-item">
-                        <div class="topic-title">📜 History Repeats - We're in Jahiliyyah</div>
-                        <div class="topic-description">
-                            Previous nations elevated their prophets to divine status. We're doing the same with Muhammad (PBUH).
-                        </div>
-                        <div class="topic-ayahs">Ayahs: 9:30-31, 5:116-117, 3:79-80, 18:110</div>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="phase-card">
-                <div class="phase-header">
-                    <div class="phase-number">3</div>
-                    <div class="phase-title">
-                        <h2>Core Beliefs</h2>
-                        <p>What true faith really means</p>
-                    </div>
-                </div>
-                <ul class="topic-list">
-                    <li class="topic-item">
-                        <div class="topic-title">💬 Faith ≠ Just Saying Words</div>
-                        <div class="topic-description">
-                            Simply saying "La ilaha illallah" is meaningless if faith hasn't entered the heart and reflected in actions.
-                        </div>
-                        <div class="topic-ayahs">Ayahs: 2:8, 49:14, 29:2-3, 2:177</div>
-                    </li>
-                    <li class="topic-item">
-                        <div class="topic-title">⚠️ Modern Shirk - Calling on Dead/Prophet</div>
-                        <div class="topic-description">
-                            Calling upon dead saints, seeking intercession through Prophet, following hadith over Quran = shirk.
-                        </div>
-                        <div class="topic-ayahs">Ayahs: 10:106, 46:5-6, 35:13-14, 39:43-44</div>
-                    </li>
-                    <li class="topic-item">
-                        <div class="topic-title">🚫 No Sects - Only Muslim</div>
-                        <div class="topic-description">
-                            All sectarian divisions (Sunni, Shia, etc.) are explicitly forbidden. We're ONE ummah under ONE book.
-                        </div>
-                        <div class="topic-ayahs">Ayahs: 6:159, 30:31-32, 3:103, 42:13-14</div>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="phase-card">
-                <div class="phase-header">
-                    <div class="phase-number">4</div>
-                    <div class="phase-title">
-                        <h2>Practical Application</h2>
-                        <p>Living by Quran alone</p>
-                    </div>
-                </div>
-                <ul class="topic-list">
-                    <li class="topic-item">
-                        <div class="topic-title">🕌 Salah from Quran (not hadith)</div>
-                        <div class="topic-description">
-                            Times of prayer and methodology from Quran itself, not external sources.
-                        </div>
-                        <div class="topic-ayahs">Ayahs: 11:114, 17:78, 20:130, 24:58</div>
-                    </li>
-                    <li class="topic-item">
-                        <div class="topic-title">🍖 Halal/Haram - What Allah ACTUALLY Said</div>
-                        <div class="topic-description">
-                            Only what Allah prohibited is haram. Don't make things haram that Allah made halal.
-                        </div>
-                        <div class="topic-ayahs">Ayahs: 5:87, 6:145-150, 16:116, 10:59</div>
-                    </li>
-                    <li class="topic-item">
-                        <div class="topic-title">👩 Women in Quran vs Culture</div>
-                        <div class="topic-description">
-                            Women's rights, hijab, marriage, divorce - what Quran actually says vs cultural fabrications.
-                        </div>
-                        <div class="topic-ayahs">Ayahs: 49:13, 33:35, 16:97, 24:30-31</div>
-                    </li>
-                    <li class="topic-item">
-                        <div class="topic-title">📚 How to Study & Live by Quran</div>
-                        <div class="topic-description">
-                            Tafsir Quran bil Quran - practical methodology for understanding and living by Quran.
-                        </div>
-                        <div class="topic-ayahs">Ayahs: 16:125, 56:79, 38:29</div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="notes-section">
-            <h3>📝 Planning Notes & Ideas</h3>
-            <p style="margin-bottom: 1rem; color: var(--text-secondary);">
-                Use this space to brainstorm ideas, note down ayah references, or plan the next topics...
-            </p>
-            <textarea id="planningNotes" placeholder="Start writing your thoughts here...
-
-Some ideas to consider:
-- Which misconception should come first in the logical sequence?
-- What ayahs are most powerful for each step?
-- What examples from daily life can we use?
-- What questions should we ask for reflection?
-- How can we make this accessible for family members at different levels?
-
-Remember: Build like a ladder - each step must support the next!"></textarea>
-            <button onclick="saveNotes()" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: var(--accent-primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
-                💾 Save Notes
-            </button>
-        </div>
+  <div class="overview">
+    <div class="topbar">
+      <a class="back-link" href="index.html">← Start / Main</a>
+      <div class="lang-toggle" aria-label="language">
+        <button id="btnEn" class="active">EN</button>
+        <button id="btnUr">اردو</button>
+        <button id="btnBoth">Both</button>
+      </div>
     </div>
 
-    <script>
-        // Load saved notes
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedNotes = localStorage.getItem('planningNotes');
-            if (savedNotes) {
-                document.getElementById('planningNotes').value = savedNotes;
-            }
-        });
+    <div class="hero">
+      <h1 class="en">Journey Overview</h1>
+      <h1 class="ur" style="display:none;">سفر کا خلاصہ</h1>
+      <p class="en">This page explains what we will go through, step-by-step, directly from the Quran. The goal is not debate; it is guidance, reflection, and change.</p>
+      <p class="ur" style="display:none;">یہ صفحہ بتاتا ہے کہ ہم قرآن سے قدم بہ قدم کن موضوعات سے گزریں گے۔ مقصد بحث نہیں بلکہ ہدایت، تدبر اور تبدیلی ہے۔</p>
+      <p class="muted en">Tip: Start with the Pre-Topic, then proceed in order.</p>
+      <p class="muted ur" style="display:none;">مشورہ: پہلے Pre-Topic سے شروع کریں، پھر ترتیب کے ساتھ آگے بڑھیں۔</p>
+    </div>
 
-        function saveNotes() {
-            const notes = document.getElementById('planningNotes').value;
-            localStorage.setItem('planningNotes', notes);
-            alert('Notes saved! ✅');
-        }
+    <div class="card">
+      <div class="card-title en">Pre‑Topic: Why I’m Doing This</div>
+      <div class="card-title ur" style="display:none;">Pre‑Topic: میں یہ کیوں کر رہا ہوں؟</div>
+      <div class="card-sub en">Allah orders us to protect ourselves and our families from the Fire (66:6), to establish prayer in the home (20:132), to begin warning with nearest relatives (26:214), and to invite with wisdom (16:125). Guidance belongs to Allah (28:56), so we remind without controlling (88:21–22).</div>
+      <div class="card-sub ur" style="display:none;">اللہ ہمیں حکم دیتا ہے کہ اپنے آپ کو اور اپنے گھر والوں کو آگ سے بچائیں (66:6)، گھر میں نماز قائم کریں (20:132)، قریبی رشتہ داروں کو خبردار کریں (26:214)، اور حکمت کے ساتھ دعوت دیں (16:125)۔ ہدایت اللہ کے اختیار میں ہے (28:56)، اس لیے ہم کنٹرول نہیں کرتے بلکہ نصیحت کرتے ہیں (88:21–22)۔</div>
+    </div>
 
-        // Auto-save every 30 seconds
-        setInterval(() => {
-            const notes = document.getElementById('planningNotes').value;
-            if (notes.trim()) {
-                localStorage.setItem('planningNotes', notes);
-            }
-        }, 30000);
-    </script>
+    <div class="card">
+      <div class="card-title en">Topic 0: The Quran — What It Is & How to Approach It</div>
+      <div class="card-title ur" style="display:none;">موضوع 0: قرآن — یہ کیا ہے اور اس سے کیسے رجوع کریں</div>
+      <div class="card-sub en">The Quran is noble, protected, and a mercy/healing for believers. We must listen in silence when it’s recited, not abandon it, and not put opinions before Allah’s words.</div>
+      <div class="card-sub ur" style="display:none;">قرآن بزرگوار اور محفوظ ہے، اور ایمان والوں کے لیے شفا و رحمت ہے۔ تلاوت کے وقت خاموشی سے سننا، قرآن کو ترک نہ کرنا، اور اپنی رائے کو اللہ کے کلام پر مقدم نہ کرنا ضروری ہے۔</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title en">Topic 1: Wake Up — Life is Short</div>
+      <div class="card-title ur" style="display:none;">موضوع 1: جاگ جاؤ — زندگی مختصر ہے</div>
+      <div class="card-sub en">On the Day of Judgment, this life will feel like an hour/day. Allah warns that we had enough time. Crisis makes people sincere; the Quran teaches us to live in consistent sincerity, not emergency sincerity.</div>
+      <div class="card-sub ur" style="display:none;">قیامت کے دن دنیا کی زندگی ایک گھڑی/ایک دن کی طرح محسوس ہوگی۔ اللہ بتاتا ہے کہ ہمیں کافی وقت دیا گیا تھا۔ مصیبت میں لوگ اخلاص اختیار کرتے ہیں؛ قرآن سکھاتا ہے کہ اخلاص کو مستقل حالت بناؤ، صرف ایمرجنسی نہیں۔</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title en">Topic 2: Purpose of Creation</div>
+      <div class="card-title ur" style="display:none;">موضوع 2: تخلیق کا مقصد</div>
+      <div class="card-sub en">We were created to worship Allah, and life is a test. True success is defined by Allah (Surah Al‑Asr) — not by money or status.</div>
+      <div class="card-sub ur" style="display:none;">ہمیں اللہ کی عبادت کے لیے پیدا کیا گیا اور زندگی امتحان ہے۔ کامیابی کی تعریف اللہ کرتا ہے (سورہ عصر)، نہ کہ دولت یا حیثیت۔</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title en">Topic 3: The Quran is Complete & Sufficient</div>
+      <div class="card-title ur" style="display:none;">موضوع 3: قرآن مکمل اور کافی ہے</div>
+      <div class="card-sub en">Allah says nothing is neglected in the Book, the Book is detailed, and asks: “what hadith after Allah and His verses will you believe?”</div>
+      <div class="card-sub ur" style="display:none;">اللہ فرماتا ہے کتاب میں کوئی چیز نہیں چھوڑی گئی، کتاب تفصیلی ہے، اور پوچھتا ہے: “اللہ اور اس کی آیات کے بعد کس حدیث پر ایمان لاؤ گے؟”</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title en">Topic 4: Use Your Brain — Don’t Follow Blindly</div>
+      <div class="card-title ur" style="display:none;">موضوع 4: عقل استعمال کرو — اندھی تقلید نہ کرو</div>
+      <div class="card-sub en">Allah condemns “we follow our fathers.” The Quran commands pondering, not mindless imitation. Not using reason is described as a severe spiritual disease.</div>
+      <div class="card-sub ur" style="display:none;">اللہ “ہم نے اپنے باپ دادا کو پایا” والی سوچ کی مذمت کرتا ہے۔ قرآن تدبر کا حکم دیتا ہے، اندھی تقلید کا نہیں۔ عقل استعمال نہ کرنا شدید روحانی بیماری ہے۔</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title en">Topic 5: History Repeats — Jahiliyyah Returns</div>
+      <div class="card-title ur" style="display:none;">موضوع 5: تاریخ دہرائی جاتی ہے — جاہلیت لوٹتی ہے</div>
+      <div class="card-sub en">Previous nations elevated prophets beyond their role. The Quran warns us not to imitate them. The Messenger is a human like us; worship belongs to Allah alone.</div>
+      <div class="card-sub ur" style="display:none;">پچھلی قوموں نے نبیوں کو ان کے مقام سے بڑھا دیا۔ قرآن ہمیں ان کی نقل سے روکتا ہے۔ رسول ہماری طرح انسان ہیں؛ عبادت صرف اللہ کے لیے ہے۔</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title en">Topic 6: True Faith — Not Just Words</div>
+      <div class="card-title ur" style="display:none;">موضوع 6: سچا ایمان — صرف الفاظ نہیں</div>
+      <div class="card-sub en">Allah distinguishes between claims and real belief. Iman must enter the heart and appear in action, not only on the tongue.</div>
+      <div class="card-sub ur" style="display:none;">اللہ دعوے اور حقیقی ایمان میں فرق کرتا ہے۔ ایمان دل میں داخل ہو اور عمل میں ظاہر ہو، صرف زبان پر نہیں۔</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title en">Topic 7: Shirk Today</div>
+      <div class="card-title ur" style="display:none;">موضوع 7: آج کا شرک</div>
+      <div class="card-sub en">The Quran forbids calling upon anyone besides Allah. Many modern practices unknowingly direct الدعاء and reliance away from Allah.</div>
+      <div class="card-sub ur" style="display:none;">قرآن اللہ کے سوا کسی کو پکارنے سے منع کرتا ہے۔ آج بہت سے اعمال لاشعوری طور پر دعا اور بھروسہ اللہ سے ہٹا دیتے ہیں۔</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title en">Topic 8: Sectarianism Forbidden</div>
+      <div class="card-title ur" style="display:none;">موضوع 8: فرقہ بندی ممنوع</div>
+      <div class="card-sub en">Allah condemns dividing the religion into sects. Our identity is Muslim (submission to Allah), not labels.</div>
+      <div class="card-sub ur" style="display:none;">اللہ دین کو فرقوں میں بانٹنے کی مذمت کرتا ہے۔ ہماری پہچان مسلم ہے، لیبل نہیں۔</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title en">Topic 9: Practical Guidance</div>
+      <div class="card-title ur" style="display:none;">موضوع 9: عملی رہنمائی</div>
+      <div class="card-sub en">Prayer time anchors are in the Quran, and Allah forbids inventing haram/halal without authority. We learn to follow Allah’s boundaries directly.</div>
+      <div class="card-sub ur" style="display:none;">نماز کے وقت کے نشانات قرآن میں ہیں، اور اللہ بغیر دلیل کے حرام/حلال گھڑنے سے منع کرتا ہے۔ ہم اللہ کی حدود براہ راست سیکھتے ہیں۔</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title en">Topic 10: Path Forward</div>
+      <div class="card-title ur" style="display:none;">موضوع 10: آگے کا راستہ</div>
+      <div class="card-sub en">Allah sent the Quran for tadabbur. We continue with weekly study, Quran explaining Quran, and inviting with wisdom and patience.</div>
+      <div class="card-sub ur" style="display:none;">اللہ نے قرآن تدبر کے لیے نازل کیا۔ ہم ہفتہ وار مطالعہ، قرآن سے قرآن کو سمجھنے، اور حکمت و صبر کے ساتھ دعوت کے ذریعے آگے بڑھتے ہیں۔</div>
+    </div>
+
+  </div>
+
+  <script>
+    const btnEn = document.getElementById('btnEn');
+    const btnUr = document.getElementById('btnUr');
+    const btnBoth = document.getElementById('btnBoth');
+
+    function setLang(mode) {
+      const enEls = document.querySelectorAll('.en');
+      const urEls = document.querySelectorAll('.ur');
+
+      if (mode === 'en') {
+        enEls.forEach(e => e.style.display = '');
+        urEls.forEach(e => e.style.display = 'none');
+      } else if (mode === 'ur') {
+        enEls.forEach(e => e.style.display = 'none');
+        urEls.forEach(e => e.style.display = '');
+      } else {
+        enEls.forEach(e => e.style.display = '');
+        urEls.forEach(e => e.style.display = '');
+      }
+
+      btnEn.classList.toggle('active', mode === 'en');
+      btnUr.classList.toggle('active', mode === 'ur');
+      btnBoth.classList.toggle('active', mode === 'both');
+
+      localStorage.setItem('overviewLang', mode);
+    }
+
+    btnEn.addEventListener('click', () => setLang('en'));
+    btnUr.addEventListener('click', () => setLang('ur'));
+    btnBoth.addEventListener('click', () => setLang('both'));
+
+    const saved = localStorage.getItem('overviewLang') || 'en';
+    setLang(saved);
+  </script>
 </body>
 </html>

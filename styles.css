@@ -844,11 +844,12 @@ button, a, input, label {
         flex-direction: column;
         direction: rtl;
         justify-content: flex-start;
-        align-items: stretch;
+        align-items: flex-end; /* cards align to the right edge */
     }
 
     .wbw-word {
         width: 100%;
+        max-width: 520px; /* keeps a right-aligned column feel */
     }
 }
 
