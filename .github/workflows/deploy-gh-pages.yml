@@ -1,4 +1,4 @@
-name: Deploy Quran folder to GitHub Pages
+name: Deploy repo root to GitHub Pages
 
 on:
   push:
@@ -26,20 +26,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Ensure quran folder exists
-        run: |
-          if [ ! -d "quran" ]; then
-            echo "quran folder not found" >&2
-            exit 1
-          fi
-
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload artifact (quran folder)
+      - name: Upload artifact (repo root)
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./quran
+          path: ./
 
       - name: Deploy to GitHub Pages
         id: deployment
