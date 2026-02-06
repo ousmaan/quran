@@ -379,6 +379,7 @@ button, a, input, label {
 .content-body {
     flex: 1;
     padding: 1rem;
+    padding-bottom: 3rem;
     max-width: 1200px;
     width: 100%;
     margin: 0 auto;
@@ -742,32 +743,19 @@ button, a, input, label {
     font-weight: 600;
 }
 
-.reflection-question {
-    font-size: 1.1rem;
+.reflection-item {
+    font-size: 1.05rem;
     line-height: 1.8;
-    margin-bottom: 0.75rem;
-    padding-left: 1.5rem;
-    position: relative;
-}
-
-.reflection-question:before {
-    content: "💭";
-    position: absolute;
-    left: 0;
-}
-
-.reflection-question-urdu {
-    font-family: var(--font-urdu);
-    font-size: 1.25rem;
-    direction: rtl;
-    text-align: right;
-    padding-right: 1.5rem;
+    margin-bottom: 0.6rem;
     padding-left: 0;
 }
 
-.reflection-question-urdu:before {
-    right: 0;
-    left: auto;
+.reflection-item-urdu {
+    font-family: var(--font-urdu);
+    font-size: 1.2rem;
+    direction: rtl;
+    text-align: right;
+    line-height: 2;
 }
 
 /* ==================== BUTTONS ==================== */
@@ -824,16 +812,6 @@ button, a, input, label {
     background: var(--accent-primary);
 }
 
-.content-footer {
-    background: var(--bg-secondary);
-    border-top: 1px solid var(--border-color);
-    padding: 1.5rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    position: sticky;
-    bottom: 0;
-}
-
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 640px) {
     .misconception-title-main {
@@ -870,15 +848,6 @@ button, a, input, label {
     }
 
     .wbw-word {
-        width: 100%;
-    }
-
-    .content-footer {
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .btn-nav {
         width: 100%;
     }
 }

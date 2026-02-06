@@ -16,8 +16,9 @@ const misconceptionsList = document.getElementById('misconceptionsList');
 const menuToggle = document.getElementById('menuToggle');
 const toggleDarkMode = document.getElementById('toggleDarkMode');
 const searchInput = document.getElementById('searchInput');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
+// Previous/Next buttons removed; navigation via sidebar
+const prevBtn = null;
+const nextBtn = null;
 const settingsBtn = document.getElementById('settingsBtn');
 const settingsPanel = document.getElementById('settingsPanel');
 const closeSettings = document.getElementById('closeSettings');
@@ -148,20 +149,6 @@ function setupEventListeners() {
         });
     });
     
-    // Navigation buttons
-    prevBtn.addEventListener('click', () => {
-        if (currentMisconceptionIndex > 0) {
-            loadMisconception(currentMisconceptionIndex - 1);
-            scrollToTop();
-        }
-    });
-    
-    nextBtn.addEventListener('click', () => {
-        if (currentMisconceptionIndex < misconceptionsData.length - 1) {
-            loadMisconception(currentMisconceptionIndex + 1);
-            scrollToTop();
-        }
-    });
     
     // Search functionality
     searchInput.addEventListener('input', (e) => {
@@ -260,10 +247,6 @@ function loadMisconception(index) {
     
     // Render content
     contentBody.innerHTML = renderMisconceptionContent(misconception);
-    
-    // Update navigation buttons
-    prevBtn.disabled = index === 0;
-    nextBtn.disabled = index === misconceptionsData.length - 1;
     
     // Apply language filter
     applyLanguageFilter();
@@ -392,15 +375,15 @@ function renderExampleSection(section) {
 }
 
 function renderReflectionSection(section) {
-    const questionsHtml = (section.questions || []).map(q => `
-        <div class="reflection-question lang-en">${escapeHtml(q.en || '')}</div>
-        <div class="reflection-question reflection-question-urdu lang-ur">${escapeHtml(q.ur || '')}</div>
+    const itemsHtml = (section.items || section.questions || []).map(item => `
+        <div class="reflection-item lang-en">${escapeHtml(item.en || '')}</div>
+        <div class="reflection-item reflection-item-urdu lang-ur">${escapeHtml(item.ur || '')}</div>
     `).join('');
-    
+
     return `
-        <div class="section reflection-section" data-display="reflection">
+        <div class="section reflection-section reflection-section-auto" data-display="reflection">
             <div class="reflection-box">
-                ${questionsHtml}
+                ${itemsHtml}
             </div>
         </div>
     `;
@@ -410,32 +393,31 @@ function renderAutoReflectionForSection(section, topic, sectionIndex) {
     // Do not auto-generate if reflections are off
     if (!showReflections) return '';
 
-    const questions = generateQuranSafeReflections(section, topic);
-    if (!questions.length) return '';
+    const items = generateQuranSafeReflections(section, topic);
+    if (!items.length) return '';
 
-    // Limit on screen to avoid overload, but keep richness by generating many and showing a curated subset.
-    const curated = questions.slice(0, 6);
+    // Curate: show the most useful, but keep it rich.
+    const curated = items.slice(0, 6);
 
-    return renderReflectionSection({ questions: curated, auto: true, sourceType: section.type, sectionIndex });
+    return renderReflectionSection({ items: curated, auto: true, sourceType: section.type, sectionIndex });
 }
 
 function generateQuranSafeReflections(section, topic) {
-    const q = [];
+    const items = [];
 
-    // Generic, Quran-safe reflections (no new claims)
+    // "Reflective understanding" (insights), still Quran-safe (no new claims)
     if (section.type === 'ayah') {
         const ref = `${section.surah}:${section.ayahNumber}`;
-        q.push({
-            en: `If Allah asked me today about ${ref}, what would my life prove — that I listened, or that I ignored it?`,
-            ur: `اگر اللہ آج مجھ سے ${ref} کے بارے میں پوچھے تو میری زندگی کیا ثابت کرے گی — کہ میں نے سنا یا کہ میں نے نظر انداز کیا؟`
+
+        items.push({
+            en: `This ayah (${ref}) is meant to move me from information to submission — not just reading, but responding.`,
+            ur: `یہ آیت (${ref}) مجھے معلومات سے اطاعت کی طرف لے جانے کے لیے ہے — صرف پڑھنا نہیں بلکہ جواب دینا۔`
         });
 
-        if (section.translation?.en) {
-            q.push({
-                en: `Which part of this ayah is hardest for me to accept or act upon — and why?`,
-                ur: `اس آیت کا کون سا حصہ میرے لیے ماننا یا اس پر عمل کرنا سب سے مشکل ہے — اور کیوں؟`
-            });
-        }
+        items.push({
+            en: `If my life does not change after hearing Allah’s words, then my relationship with the Quran has become passive, not living.`,
+            ur: `اگر اللہ کا کلام سننے کے بعد میری زندگی نہیں بدلتی تو قرآن سے میرا تعلق زندہ نہیں بلکہ بے اثر ہو گیا ہے۔`
+        });
 
         if (Array.isArray(section.wbw) && section.wbw.length) {
             const keyWords = section.wbw
@@ -444,43 +426,39 @@ function generateQuranSafeReflections(section, topic) {
                 .map(w => `${w.arabic} (${w.rootMeaning})`);
 
             if (keyWords.length) {
-                q.push({
-                    en: `The ayah uses key words like: ${keyWords.join(', ')}. Which of these words describes my current state — and which one do I need to change?`,
-                    ur: `اس آیت میں اہم الفاظ ہیں: ${keyWords.join('، ')}۔ ان میں سے کون سا لفظ میری موجودہ حالت بیان کرتا ہے — اور مجھے کس کو بدلنے کی ضرورت ہے؟`
+                items.push({
+                    en: `Notice the key words: ${keyWords.join(', ')}. The Quran often reforms people by reforming what they pay attention to.`,
+                    ur: `اہم الفاظ پر غور کریں: ${keyWords.join('، ')}۔ قرآن اکثر انسان کو اس کی توجہ کی اصلاح کے ذریعے بدلتا ہے۔`
                 });
             }
         }
 
-        q.push({
-            en: `What would it look like to obey this ayah in one concrete action within the next 24 hours?`,
-            ur: `اگلے 24 گھنٹوں میں ایک عملی قدم کے طور پر اس آیت کی اطاعت کیسے نظر آئے گی؟`
-        });
-
-        q.push({
-            en: `If I keep living the same way for 10 years, will this ayah be a proof for me or against me?`,
-            ur: `اگر میں 10 سال اسی طرح جیتا رہا تو یہ آیت میرے حق میں دلیل بنے گی یا میرے خلاف؟`
+        items.push({
+            en: `A Quranic way to honor this ayah is to take one concrete action that matches it, even if small — consistency is part of sincerity.`,
+            ur: `اس آیت کی تعظیم کا قرآنی طریقہ یہ ہے کہ اس کے مطابق ایک عملی قدم اٹھایا جائے، چاہے چھوٹا ہو — تسلسل اخلاص کا حصہ ہے۔`
         });
     }
 
     if (section.type === 'intro' || section.type === 'explanation') {
-        q.push({
-            en: `Do I want truth even if it exposes my habits — or do I only want comfort that confirms what I already do?`,
-            ur: `کیا میں سچ چاہتا ہوں چاہے وہ میری عادات کو بے نقاب کر دے — یا میں صرف وہ سکون چاہتا ہوں جو میری موجودہ حالت کی تصدیق کرے؟`
+        items.push({
+            en: `This section is not asking me to win debates — it is asking me to examine my own assumptions under the light of Allah’s words.`,
+            ur: `یہ حصہ مجھ سے بحث جیتنے کا نہیں کہہ رہا — یہ اللہ کے کلام کی روشنی میں اپنے مفروضات کا جائزہ لینے کو کہہ رہا ہے۔`
         });
-        q.push({
-            en: `What is one assumption in my life that this section challenges?`,
-            ur: `اس حصے نے میری زندگی کے کس ایک مفروضے کو چیلنج کیا ہے؟`
+
+        items.push({
+            en: `The Quran repeatedly praises those who reflect and change; it condemns those who hear but remain the same.`,
+            ur: `قرآن بار بار تدبر کرنے اور بدلنے والوں کی تعریف کرتا ہے؛ اور سن کر بھی نہ بدلنے والوں کی مذمت کرتا ہے۔`
         });
     }
 
     if (section.type === 'example') {
-        q.push({
-            en: `Which part of this example resembles my own life most — and what change does the Quran demand from me?`,
-            ur: `اس مثال کا کون سا حصہ میری زندگی سے سب سے زیادہ ملتا ہے — اور قرآن مجھ سے کون سی تبدیلی کا مطالبہ کرتا ہے؟`
+        items.push({
+            en: `Examples are mirrors: the goal is not to judge others, but to recognize myself before the Day when Allah shows me my life as evidence.`,
+            ur: `مثالیں آئینہ ہیں: مقصد دوسروں کو جج کرنا نہیں بلکہ خود کو پہچاننا ہے، اس دن سے پہلے جب اللہ میری زندگی کو ثبوت بنا کر دکھائے گا۔`
         });
     }
 
-    return q;
+    return items;
 }
 
 function setLanguage(lang) {
@@ -619,11 +597,3 @@ function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Keyboard navigation
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft' && !prevBtn.disabled) {
-        prevBtn.click();
-    } else if (e.key === 'ArrowRight' && !nextBtn.disabled) {
-        nextBtn.click();
-    }
-});
