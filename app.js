@@ -402,60 +402,147 @@ function renderAutoReflectionForSection(section, topic, sectionIndex) {
     return renderReflectionSection({ items: curated, auto: true, sourceType: section.type, sectionIndex });
 }
 
+function stableHash(str) {
+    // Simple deterministic hash (32-bit)
+    let h = 2166136261;
+    for (let i = 0; i < str.length; i++) {
+        h ^= str.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+}
+
+function extractKeywords(text, max = 5) {
+    const stop = new Set([
+        'the','and','or','to','of','in','on','for','with','from','is','are','was','were','be','been','that','this','those','these',
+        'a','an','as','by','it','its','their','them','you','your','we','our','they','he','she','his','her',
+        'not','no','but','then','so','if','only','indeed','surely','will','may','can','cannot','do','does','did',
+        'allah'
+    ]);
+
+    const words = String(text || '')
+        .toLowerCase()
+        .replace(/[^a-z\s]/g, ' ')
+        .split(/\s+/)
+        .filter(Boolean)
+        .filter(w => w.length >= 4)
+        .filter(w => !stop.has(w));
+
+    const freq = new Map();
+    for (const w of words) freq.set(w, (freq.get(w) || 0) + 1);
+
+    return [...freq.entries()]
+        .sort((a,b) => b[1]-a[1])
+        .slice(0, max)
+        .map(([w]) => w);
+}
+
 function generateQuranSafeReflections(section, topic) {
     const items = [];
 
-    // "Reflective understanding" (insights), still Quran-safe (no new claims)
+    // "Reflective understanding" that is SPECIFIC to each ayah/section
     if (section.type === 'ayah') {
         const ref = `${section.surah}:${section.ayahNumber}`;
+        const enText = section.translation?.en || '';
+        const urText = section.translation?.ur || '';
+        const kws = extractKeywords(enText, 5);
 
+        // Pull a few WBW root meanings too (more specific)
+        const roots = Array.isArray(section.wbw)
+            ? section.wbw
+                .filter(w => (w.rootMeaning || '').trim().length)
+                .slice(0, 6)
+                .map(w => `${w.arabic} (${w.rootMeaning})`)
+            : [];
+
+        // Template bank (varied) — avoid simply restating the translation
         items.push({
-            en: `This ayah (${ref}) is meant to move me from information to submission — not just reading, but responding.`,
-            ur: `یہ آیت (${ref}) مجھے معلومات سے اطاعت کی طرف لے جانے کے لیے ہے — صرف پڑھنا نہیں بلکہ جواب دینا۔`
+            en: `Ayah focus (${ref}): What does Allah want me to notice here — a command, a warning, a promise, or a description of people?`,
+            ur: `آیت کا فوکس (${ref}): اللہ یہاں مجھے کس چیز کی طرف متوجہ کر رہا ہے — حکم، تنبیہ، وعدہ، یا لوگوں کی کیفیت؟`
         });
 
-        items.push({
-            en: `If my life does not change after hearing Allah’s words, then my relationship with the Quran has become passive, not living.`,
-            ur: `اگر اللہ کا کلام سننے کے بعد میری زندگی نہیں بدلتی تو قرآن سے میرا تعلق زندہ نہیں بلکہ بے اثر ہو گیا ہے۔`
-        });
-
-        if (Array.isArray(section.wbw) && section.wbw.length) {
-            const keyWords = section.wbw
-                .filter(w => (w.rootMeaning || '').length)
-                .slice(0, 4)
-                .map(w => `${w.arabic} (${w.rootMeaning})`);
-
-            if (keyWords.length) {
-                items.push({
-                    en: `Notice the key words: ${keyWords.join(', ')}. The Quran often reforms people by reforming what they pay attention to.`,
-                    ur: `اہم الفاظ پر غور کریں: ${keyWords.join('، ')}۔ قرآن اکثر انسان کو اس کی توجہ کی اصلاح کے ذریعے بدلتا ہے۔`
-                });
-            }
+        if (kws.length) {
+            items.push({
+                en: `This ayah revolves around themes like: ${kws.join(', ')}. Which of these themes is most present in my life right now?`,
+                ur: `اس آیت کے گرد یہ موضوعات نمایاں ہیں: ${kws.join('، ')}۔ ان میں سے کون سا موضوع میری زندگی میں سب سے زیادہ نمایاں ہے؟`
+            });
         }
 
+        if (roots.length) {
+            items.push({
+                en: `Key Quran words here: ${roots.join(', ')}. The Quran reforms people by reforming what they notice and prioritize.`,
+                ur: `یہاں اہم قرآنی الفاظ: ${roots.join('، ')}۔ قرآن انسان کو اس کی توجہ اور ترجیحات کی اصلاح سے بدلتا ہے۔`
+            });
+        }
+
+        // Obedience angle without making new law
         items.push({
-            en: `A Quranic way to honor this ayah is to take one concrete action that matches it, even if small — consistency is part of sincerity.`,
-            ur: `اس آیت کی تعظیم کا قرآنی طریقہ یہ ہے کہ اس کے مطابق ایک عملی قدم اٹھایا جائے، چاہے چھوٹا ہو — تسلسل اخلاص کا حصہ ہے۔`
+            en: `If I truly accept this ayah, one visible change should appear in my choices (speech, time, money, relationships) — not just in my feelings.`,
+            ur: `اگر میں واقعی اس آیت کو مانتا ہوں تو میری ترجیحات میں کوئی واضح تبدیلی نظر آئے گی (بات، وقت، مال، تعلقات) — صرف جذبات میں نہیں۔`
         });
+
+        // Warning/comfort framing (safe)
+        items.push({
+            en: `Ask: is this ayah warning me, guiding me, or giving me hope? If I treat it as “information only,” I lose its purpose.`,
+            ur: `سوچیں: یہ آیت مجھے ڈرا رہی ہے، رہنمائی دے رہی ہے یا امید دے رہی ہے؟ اگر میں اسے صرف “معلومات” سمجھوں تو مقصد ضائع ہو جاتا ہے۔`
+        });
+
+        // Deterministic variety: shuffle using hash so different ayahs show different subsets
+        const h = stableHash(ref);
+        items.sort((a,b) => (stableHash(a.en + ref) ^ h) - (stableHash(b.en + ref) ^ h));
+
+        // Also add a short, always-useful closer
+        items.push({
+            en: `A Quranic way to honor ${ref} is to take one concrete action today that matches it — then repeat until it becomes character.`,
+            ur: `(${ref}) کی تعظیم کا قرآنی طریقہ: آج اس کے مطابق ایک عملی قدم اٹھائیں — پھر اسے دہراتے رہیں یہاں تک کہ یہ مزاج بن جائے۔`
+        });
+
+        return items;
     }
 
     if (section.type === 'intro' || section.type === 'explanation') {
+        const en = section.content?.en || '';
+        const ur = section.content?.ur || '';
+        const kws = extractKeywords(en, 5);
+
+        // Avoid repeating the full text as "Summary" (too long on mobile).
+        // Instead: derive focused reflections from themes.
+
+        if (kws.length) {
+            items.push({
+                en: `Key themes in this section: ${kws.join(', ')}. Which theme would fix the biggest problem in my life if I took it seriously?`,
+                ur: `اس حصے کے اہم موضوعات: ${kws.join('، ')}۔ ان میں سے کون سا موضوع میری زندگی کے سب سے بڑے مسئلے کو ٹھیک کر سکتا ہے اگر میں اسے سنجیدگی سے لے لوں؟`
+            });
+
+            items.push({
+                en: `Which theme (${kws[0]}) do I talk about, but fail to practice consistently?`,
+                ur: `کون سا موضوع (${kws[0]}) میں زبان سے تو کہتا ہوں لیکن مستقل طور پر اس پر عمل نہیں کرتا؟`
+            });
+        }
+
         items.push({
-            en: `This section is not asking me to win debates — it is asking me to examine my own assumptions under the light of Allah’s words.`,
-            ur: `یہ حصہ مجھ سے بحث جیتنے کا نہیں کہہ رہا — یہ اللہ کے کلام کی روشنی میں اپنے مفروضات کا جائزہ لینے کو کہہ رہا ہے۔`
+            en: `If this section is true, what would I need to stop defending — and start changing?`,
+            ur: `اگر یہ بات سچ ہے تو مجھے کس چیز کا دفاع چھوڑ کر کس چیز کو بدلنا شروع کرنا چاہیے؟`
         });
 
         items.push({
-            en: `The Quran repeatedly praises those who reflect and change; it condemns those who hear but remain the same.`,
-            ur: `قرآن بار بار تدبر کرنے اور بدلنے والوں کی تعریف کرتا ہے؛ اور سن کر بھی نہ بدلنے والوں کی مذمت کرتا ہے۔`
+            en: `What is the smallest honest change I can make today that aligns with this section — without waiting for a "perfect" time?`,
+            ur: `اس حصے کے مطابق آج میں سب سے چھوٹی سچی تبدیلی کیا کر سکتا ہوں — بغیر "کامل وقت" کا انتظار کیے؟`
         });
+
+        return items;
     }
 
     if (section.type === 'example') {
         items.push({
-            en: `Examples are mirrors: the goal is not to judge others, but to recognize myself before the Day when Allah shows me my life as evidence.`,
-            ur: `مثالیں آئینہ ہیں: مقصد دوسروں کو جج کرنا نہیں بلکہ خود کو پہچاننا ہے، اس دن سے پہلے جب اللہ میری زندگی کو ثبوت بنا کر دکھائے گا۔`
+            en: `This example is not to judge others — it’s a mirror so I recognize myself before Allah shows me my life as evidence.`,
+            ur: `یہ مثال دوسروں کو جج کرنے کے لیے نہیں — یہ آئینہ ہے تاکہ میں خود کو پہچانوں اس سے پہلے کہ اللہ میری زندگی کو ثبوت بنا کر دکھائے۔`
         });
+        items.push({
+            en: `Which detail in this example feels uncomfortable because it resembles me — and what Quranic change does it demand?`,
+            ur: `اس مثال کی کون سی بات مجھے اس لیے چبھتی ہے کہ وہ مجھ سے ملتی ہے — اور قرآن مجھ سے کون سی تبدیلی مانگتا ہے؟`
+        });
+        return items;
     }
 
     return items;
