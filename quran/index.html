@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Return to Quran - رجوع إلى القرآن</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Inter:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Amiri+Quran&family=Scheherazade+New:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Side Navigation -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>Return to Quran</h2>
+                <p class="sidebar-subtitle">رجوع إلى القرآن</p>
+                <p class="sidebar-subtitle-urdu">قرآن کی طرف واپسی</p>
+            </div>
+            
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search ayahs, topics..." class="search-input">
+            </div>
+
+            <div class="misconceptions-list" id="misconceptionsList">
+                <!-- Will be populated by JavaScript -->
+            </div>
+
+            <div class="sidebar-footer">
+                <a href="planning.html" style="display: block; margin-bottom: 0.75rem; padding: 0.75rem; background: var(--accent-secondary); color: white; text-align: center; border-radius: 8px; text-decoration: none; font-weight: 600;">
+                    📋 Content Planning
+                </a>
+                <button class="btn-secondary" id="toggleDarkMode">🌙 Dark Mode</button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content" id="mainContent">
+            <div class="content-header">
+                <button class="menu-toggle" id="menuToggle">☰</button>
+                <div class="header-controls">
+                    <div class="language-toggle">
+                        <button class="lang-btn active" data-lang="en">EN</button>
+                        <button class="lang-btn" data-lang="ur">اردو</button>
+                        <button class="lang-btn" data-lang="both">Both</button>
+                    </div>
+                    <button class="settings-btn" id="settingsBtn">⚙️</button>
+                </div>
+            </div>
+
+            <!-- Settings Panel -->
+            <div class="settings-panel hidden" id="settingsPanel">
+                <div class="settings-header">
+                    <h3>Display Settings</h3>
+                    <button class="close-settings" id="closeSettings">✕</button>
+                </div>
+                <div class="settings-body">
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="toggleTransliteration" checked>
+                            <span>Show Transliteration</span>
+                        </label>
+                        <p class="setting-desc">Display Arabic pronunciation guide</p>
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="toggleWBW" checked>
+                            <span>Show Word-by-Word Analysis</span>
+                        </label>
+                        <p class="setting-desc">Display detailed word breakdown</p>
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="toggleTranslation" checked>
+                            <span>Show Full Translation</span>
+                        </label>
+                        <p class="setting-desc">Display verse translations</p>
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="toggleRoots" checked>
+                            <span>Show Arabic Roots</span>
+                        </label>
+                        <p class="setting-desc">Display root word meanings</p>
+                    </div>
+
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="toggleReflections" checked>
+                            <span>Show Reflections</span>
+                        </label>
+                        <p class="setting-desc">Show the reflection questions after every section</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-body" id="contentBody">
+                <!-- Content will be loaded here -->
+            </div>
+
+            <div class="content-footer">
+                <button class="btn-nav" id="prevBtn">← Previous</button>
+                <button class="btn-nav" id="nextBtn">Next →</button>
+            </div>
+        </main>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
