@@ -110,6 +110,7 @@ function loadSavedPreferences() {
     if (savedLang) {
         currentLanguage = savedLang;
         updateLanguageButtons();
+        applyLanguageFilter();
     }
     
     // Load display preferences
@@ -264,22 +265,23 @@ function renderMisconceptionContent(misconception) {
         </div>
     `;
 
-    // Render each section, and auto-generate a reflection after it (unless section already is reflection)
+    // Render each section (reflections disabled)
     misconception.sections.forEach((section, idx) => {
         if (section.type === 'intro') {
             html += renderIntroSection(section);
-            html += renderAutoReflectionForSection(section, misconception, idx);
         } else if (section.type === 'ayah') {
             html += renderAyahSection(section);
-            html += renderAutoReflectionForSection(section, misconception, idx);
         } else if (section.type === 'explanation') {
             html += renderExplanationSection(section);
-            html += renderAutoReflectionForSection(section, misconception, idx);
         } else if (section.type === 'example') {
             html += renderExampleSection(section);
-            html += renderAutoReflectionForSection(section, misconception, idx);
         } else if (section.type === 'reflection') {
-            html += renderReflectionSection(section);
+            // Skip rendering reflection sections entirely
+            // html += renderReflectionSection(section);
+        } else if (section.type === 'related-ayahs') {
+            html += renderRelatedAyahsSection(section);
+        } else if (section.type === 'self-assessment') {
+            html += renderSelfAssessmentSection(section);
         }
     });
 
@@ -298,11 +300,16 @@ function renderIntroSection(section) {
 }
 
 function renderAyahSection(section) {
-    const ayahTransliteration = Array.isArray(section.wbw)
-        ? section.wbw.map(w => (w.transliteration || '').trim()).filter(Boolean).join(' ')
-        : '';
+    const wbwArr = Array.isArray(section.wbw) ? section.wbw : [];
+    const translationEn = section.translation?.en ?? '';
+    const translationUr = section.translation?.ur ?? '';
 
-    const wbwHtml = section.wbw.map(word => `
+    const ayahTransliteration = wbwArr
+        .map(w => (w.transliteration || '').trim())
+        .filter(Boolean)
+        .join(' ');
+
+    const wbwHtml = wbwArr.map(word => `
         <div class="wbw-word">
             <div class="wbw-arabic">${escapeHtml(word.arabic || '')}</div>
             <div class="wbw-transliteration">${escapeHtml(word.transliteration || '')}</div>
@@ -334,12 +341,14 @@ function renderAyahSection(section) {
                 ` : ''}
                 
                 <div class="wbw-container">
+                    ${wbwArr.length ? '' : '<div class="missing-data">Missing word-by-word (WBW) data for this ayah</div>'}
                     <div class="wbw-grid">${wbwHtml}</div>
                 </div>
                 
                 <div class="translation">
-                    <p class="translation-text lang-en">${escapeHtml(section.translation.en || '')}</p>
-                    <p class="translation-text translation-urdu lang-ur">${escapeHtml(section.translation.ur || '')}</p>
+                    ${translationEn || translationUr ? '' : '<div class="missing-data">Missing translation (EN/UR) for this ayah</div>'}
+                    <p class="translation-text lang-en">${escapeHtml(translationEn)}</p>
+                    <p class="translation-text translation-urdu lang-ur">${escapeHtml(translationUr)}</p>
                 </div>
             </div>
         </div>
@@ -374,6 +383,48 @@ function renderExampleSection(section) {
     `;
 }
 
+function renderRelatedAyahsSection(section) {
+    const ayahsHtml = (section.ayahs || []).map(ayah => `
+        <div class="related-ayah-item">
+            <div class="related-ayah-reference">${ayah.reference || ''}</div>
+            <div class="ayah-arabic">${ayah.arabic || ''}</div>
+            <div class="translation">
+                <p class="translation-text lang-en">${escapeHtml(ayah.translation?.en || '')}</p>
+                <p class="translation-text translation-urdu lang-ur">${escapeHtml(ayah.translation?.ur || '')}</p>
+            </div>
+        </div>
+    `).join('');
+
+    return `
+        <div class="section related-ayahs-section">
+            <div class="related-ayahs-box">
+                <h3 class="related-ayahs-title lang-en">${section.title?.en || 'Related Ayahs'}</h3>
+                <h3 class="related-ayahs-title lang-ur">${section.title?.ur || 'متعلقہ آیات'}</h3>
+                ${ayahsHtml}
+            </div>
+        </div>
+    `;
+}
+
+function renderSelfAssessmentSection(section) {
+    const questionsHtml = (section.questions || []).map(q => `
+        <li class="self-assessment-item lang-en">${escapeHtml(q.en || '')}</li>
+        <li class="self-assessment-item self-assessment-item-urdu lang-ur">${escapeHtml(q.ur || '')}</li>
+    `).join('');
+
+    return `
+        <div class="section self-assessment-section">
+            <div class="self-assessment-box">
+                <h3 class="self-assessment-title lang-en">${section.title?.en || 'Self-Assessment'}</h3>
+                <h3 class="self-assessment-title lang-ur">${section.title?.ur || 'خود احتسابی'}</h3>
+                <ul class="self-assessment-questions">
+                    ${questionsHtml}
+                </ul>
+            </div>
+        </div>
+    `;
+}
+
 function renderReflectionSection(section) {
     const itemsHtml = (section.items || section.questions || []).map(item => `
         <div class="reflection-item lang-en">${escapeHtml(item.en || '')}</div>
@@ -390,16 +441,8 @@ function renderReflectionSection(section) {
 }
 
 function renderAutoReflectionForSection(section, topic, sectionIndex) {
-    // Do not auto-generate if reflections are off
-    if (!showReflections) return '';
-
-    const items = generateQuranSafeReflections(section, topic);
-    if (!items.length) return '';
-
-    // Curate: show the most useful, but keep it rich.
-    const curated = items.slice(0, 6);
-
-    return renderReflectionSection({ items: curated, auto: true, sourceType: section.type, sectionIndex });
+    // Reflections disabled - always return empty
+    return '';
 }
 
 function stableHash(str) {

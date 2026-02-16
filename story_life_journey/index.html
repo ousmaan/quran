@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quran Life Journey (Split Story)</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-left">
+      <a class="back" href="../index.html">← Main</a>
+      <div class="brand">
+        <div class="brand-title">Quran Life Journey</div>
+        <div class="brand-sub">A Quran-only split story</div>
+      </div>
+    </div>
+
+    <div class="topbar-right">
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="ur">اردو</button>
+        <button class="lang-btn" data-lang="both">Both</button>
+      </div>
+      <div class="nav">
+        <button id="prevStage" class="nav-btn" disabled>Prev</button>
+        <button id="nextStage" class="nav-btn">Next</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="stage-header" id="stageHeader"></section>
+
+    <section class="split" id="split"></section>
+
+    <section class="deepdive" id="deepDive"></section>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

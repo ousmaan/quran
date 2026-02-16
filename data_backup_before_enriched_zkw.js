@@ -4300,59 +4300,8 @@ const misconceptionsData = [
                 en: "HOW to purify yourself? Restrain the nafs from hawa (vain desires). This is the practical method. Your soul wants instant gratification, shortcuts, comfort, status. RESTRAIN it. Fear standing before Allah and say NO to your lower desires. This is active self-purification.",
                 ur: "خود کو کیسے پاک کریں؟ نفس کو ہوا (خواہشات) سے روکیں۔ یہ عملی طریقہ ہے۔ آپ کی روح فوری تسکین، شارٹ کٹس، آرام، حیثیت چاہتی ہے۔ اسے روکیں۔ اللہ کے سامنے کھڑے ہونے سے ڈریں اور اپنی نچلی خواہشات کو نہیں کہیں۔ یہ فعال خود تزکیہ ہے۔"
             }
-        },
-
-        // RELATED AYAHS: The Purified Character - What Does a Purified Soul Look Like?
-        {
-            type: "related-ayahs",
-            title: {
-                en: "Related Ayahs - The Purified Character: Traits of a Purified Soul",
-                ur: "متعلقہ آیات - پاک کردار: پاک روح کی خصوصیات"
-            },
-            ayahs: [
-                {
-                    reference: "Surah Al-Furqan (25:63)",
-                    arabic: "وَعِبَادُ ٱلرَّحْمَـٰنِ ٱلَّذِينَ يَمْشُونَ عَلَى ٱلْأَرْضِ هَوْنًۭا وَإِذَا خَاطَبَهُمُ ٱلْجَـٰهِلُونَ قَالُوا۟ سَلَـٰمًۭا",
-                    translation: {
-                        en: "And the servants of the Most Merciful are those who walk upon the earth in humility, and when the ignorant address them, they say [words of] peace.",
-                        ur: "اور رحمٰن کے بندے وہ ہیں جو زمین پر عاجزی سے چلتے ہیں، اور جب جاہل لوگ ان سے بات کرتے ہیں تو وہ سلام کہتے ہیں۔"
-                    }
-                },
-                {
-                    reference: "Surah Luqman (31:18-19)",
-                    arabic: "وَلَا تُصَعِّرْ خَدَّكَ لِلنَّاسِ وَلَا تَمْشِ فِى ٱلْأَرْضِ مَرَحًا ۖ إِنَّ ٱللَّهَ لَا يُحِبُّ كُلَّ مُخْتَالٍۢ فَخُورٍۢ ۝ وَٱقْصِدْ فِى مَشْيِكَ وَٱغْضُضْ مِن صَوْتِكَ",
-                    translation: {
-                        en: "And do not turn your cheek [in contempt] toward people and do not walk through the earth exultantly. Indeed, Allah does not like everyone self-deluded and boastful. And be moderate in your pace and lower your voice.",
-                        ur: "اور لوگوں سے اپنا منہ نہ پھیرو اور زمین میں اکڑ کر نہ چلو۔ بےشک اللہ کسی مغرور فخر کرنے والے کو پسند نہیں کرتا۔ اور اپنی چال میں میانہ روی اختیار کرو اور اپنی آواز پست رکھو۔"
-                    }
-                },
-                {
-                    reference: "Surah Al-Ahzab (33:70-71)",
-                    arabic: "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ ٱتَّقُوا۟ ٱللَّهَ وَقُولُوا۟ قَوْلًۭا سَدِيدًۭا ۝ يُصْلِحْ لَكُمْ أَعْمَـٰلَكُمْ وَيَغْفِرْ لَكُمْ ذُنُوبَكُمْ",
-                    translation: {
-                        en: "O you who believe, fear Allah and speak words of appropriate justice. He will [then] amend for you your deeds and forgive you your sins.",
-                        ur: "اے ایمان والو! اللہ سے ڈرو اور سیدھی بات کرو۔ وہ تمہارے اعمال درست کر دے گا اور تمہارے گناہ معاف کر دے گا۔"
-                    }
-                },
-                {
-                    reference: "Surah Al-Baqarah (2:153)",
-                    arabic: "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ ٱسْتَعِينُوا۟ بِٱلصَّبْرِ وَٱلصَّلَوٰةِ ۚ إِنَّ ٱللَّهَ مَعَ ٱلصَّـٰبِرِينَ",
-                    translation: {
-                        en: "O you who believe, seek help through patience and prayer. Indeed, Allah is with the patient.",
-                        ur: "اے ایمان والو! صبر اور نماز سے مدد مانگو۔ بےشک اللہ صبر کرنے والوں کے ساتھ ہے۔"
-                    }
-                },
-                {
-                    reference: "Surah Ibrahim (14:7)",
-                    arabic: "وَإِذْ تَأَذَّنَ رَبُّكُمْ لَئِن شَكَرْتُمْ لَأَزِيدَنَّكُمْ ۖ وَلَئِن كَفَرْتُمْ إِنَّ عَذَابِى لَشَدِيدٌۭ",
-                    translation: {
-                        en: "And [remember] when your Lord proclaimed, 'If you are grateful, I will surely increase you [in favor]; but if you deny, indeed, My punishment is severe.'",
-                        ur: "اور جب تمہارے رب نے اعلان کیا: اگر تم شکر کرو گے تو میں تمہیں ضرور بڑھاؤں گا، اور اگر تم ناشکری کرو گے تو بےشک میرا عذاب سخت ہے۔"
-                    }
-                }
-            ]
-        },
-
+        }
+,
         // ===== PART 4: WEALTH PURIFICATION - Zakat =====
         {
             type: "intro",
@@ -4603,50 +4552,6 @@ const misconceptionsData = [
                 ur: "لفظ 'یتزکّٰی' پھر سے دیکھیں - وہ مال دیتا ہے جبکہ خود کو پاک کر رہا ہے۔ تزکیہ کے بعد نہیں۔ دینے کا عمل خود تزکیہ ہے۔ اور دیکھیں: کوئی توقعات نہیں، کوئی احسان جس کا بدلہ دیا جائے نہیں، صرف اللہ کی رضا۔ جب آپ اس طرح دیتے ہیں، اللہ وعدہ کرتا ہے: 'تم راضی ہو گے' - آخرت میں اپنے انعام سے۔"
             }
         },
-
-        // RELATED AYAHS: The Pillars as Purification Tools
-        {
-            type: "related-ayahs",
-            title: {
-                en: "Related Ayahs - The Pillars as Purification: How Worship Purifies Us",
-                ur: "متعلقہ آیات - ارکان بطور تزکیہ: عبادت ہمیں کیسے پاک کرتی ہے"
-            },
-            ayahs: [
-                {
-                    reference: "Surah Taha (20:14)",
-                    arabic: "إِنَّنِىٓ أَنَا ٱللَّهُ لَآ إِلَـٰهَ إِلَّآ أَنَا۠ فَٱعْبُدْنِى وَأَقِمِ ٱلصَّلَوٰةَ لِذِكْرِىٓ",
-                    translation: {
-                        en: "Indeed, I am Allah. There is no deity except Me, so worship Me and establish prayer for My remembrance.",
-                        ur: "بےشک میں ہی اللہ ہوں، میرے سوا کوئی معبود نہیں، پس میری عبادت کرو اور میری یاد کے لیے نماز قائم کرو۔"
-                    }
-                },
-                {
-                    reference: "Surah Al-Ankabut (29:45)",
-                    arabic: "ٱتْلُ مَآ أُوحِىَ إِلَيْكَ مِنَ ٱلْكِتَـٰبِ وَأَقِمِ ٱلصَّلَوٰةَ ۖ إِنَّ ٱلصَّلَوٰةَ تَنْهَىٰ عَنِ ٱلْفَحْشَآءِ وَٱلْمُنكَرِ",
-                    translation: {
-                        en: "Recite what has been revealed to you of the Book and establish prayer. Indeed, prayer prevents immorality and wrongdoing.",
-                        ur: "جو کتاب تمہاری طرف وحی کی گئی ہے اسے پڑھو اور نماز قائم کرو۔ بےشک نماز بےحیائی اور برائی سے روکتی ہے۔"
-                    }
-                },
-                {
-                    reference: "Surah Al-Baqarah (2:183)",
-                    arabic: "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ كُتِبَ عَلَيْكُمُ ٱلصِّيَامُ كَمَا كُتِبَ عَلَى ٱلَّذِينَ مِن قَبْلِكُمْ لَعَلَّكُمْ تَتَّقُونَ",
-                    translation: {
-                        en: "O you who believe, fasting is prescribed for you as it was prescribed for those before you, that you may become righteous (attain taqwa/purification).",
-                        ur: "اے ایمان والو! تم پر روزے فرض کیے گئے جیسے تم سے پہلے لوگوں پر فرض کیے گئے تھے تاکہ تم تقویٰ اختیار کرو۔"
-                    }
-                },
-                {
-                    reference: "Surah An-Nur (24:31)",
-                    arabic: "وَتُوبُوٓا۟ إِلَى ٱللَّهِ جَمِيعًا أَيُّهَ ٱلْمُؤْمِنُونَ لَعَلَّكُمْ تُفْلِحُونَ",
-                    translation: {
-                        en: "And turn to Allah in repentance, all of you, O believers, that you might succeed.",
-                        ur: "اور اللہ کی طرف توبہ کرو، اے مومنو! تاکہ تم کامیاب ہو سکو۔"
-                    }
-                }
-            ]
-        },
-
         // PART 5: THE DANGERS - Corruption & Its Consequences
         {
             type: "intro",
@@ -5115,49 +5020,6 @@ const misconceptionsData = [
                 en: "The COMPLETE picture of successful believers: Humble in salah (khashi'oon), avoid vain talk (mu'ridoon), ACTIVE in zakat (fa'iloon - doers, not just thinkers), guard their modesty, keep their trusts, maintain their prayers. Notice: 'fa'iloon liz-zakah' - ACTIVE in purification. Not passive. Not once a year. CONTINUOUSLY purifying through giving. This is the lifestyle of tazkiya that leads to eternal success.",
                 ur: "کامیاب مومنوں کی مکمل تصویر: نماز میں خشوع (خاشعون)، بیہودہ بات سے بچنا (معرضون)، زکوٰۃ میں فعال (فاعلون - کرنے والے، صرف سوچنے والے نہیں)، اپنی شرمگاہوں کی حفاظت، اپنی امانتیں رکھنا، اپنی نمازیں برقرار رکھنا۔ دیکھیں: 'فاعلون للزکوٰۃ' - تزکیہ میں فعال۔ منفعل نہیں۔ سال میں ایک بار نہیں۔ دینے کے ذریعے مسلسل پاک ہونا۔ یہ تزکیہ کا طرز زندگی ہے جو ابدی کامیابی کی طرف لے جاتا ہے۔"
             }
-        },
-
-        // RELATED AYAHS: Social & Community Tazkiya
-        {
-            type: "related-ayahs",
-            title: {
-                en: "Related Ayahs - Social Tazkiya: Purification in Community Life",
-                ur: "متعلقہ آیات - سماجی تزکیہ: معاشرتی زندگی میں پاکیزگی"
-            },
-            ayahs: [
-                {
-                    reference: "Surah An-Nisa (4:135)",
-                    arabic: "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ كُونُوا۟ قَوَّٰمِينَ بِٱلْقِسْطِ شُهَدَآءَ لِلَّهِ وَلَوْ عَلَىٰٓ أَنفُسِكُمْ أَوِ ٱلْوَٰلِدَيْنِ وَٱلْأَقْرَبِينَ",
-                    translation: {
-                        en: "O you who believe, be persistently standing firm in justice, witnesses for Allah, even if it be against yourselves or parents and relatives.",
-                        ur: "اے ایمان والو! انصاف پر مضبوطی سے قائم رہو، اللہ کے لیے گواہ بنو، چاہے یہ تمہارے اپنے خلاف ہو یا والدین اور رشتہ داروں کے خلاف۔"
-                    }
-                },
-                {
-                    reference: "Surah Al-Ma'idah (5:8)",
-                    arabic: "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ كُونُوا۟ قَوَّٰمِينَ لِلَّهِ شُهَدَآءَ بِٱلْقِسْطِ ۖ وَلَا يَجْرِمَنَّكُمْ شَنَـَٔانُ قَوْمٍ عَلَىٰٓ أَلَّا تَعْدِلُوا۟ ۚ ٱعْدِلُوا۟ هُوَ أَقْرَبُ لِلتَّقْوَىٰ",
-                    translation: {
-                        en: "O you who believe, be persistently standing firm for Allah, witnesses in justice, and do not let the hatred of a people prevent you from being just. Be just; that is nearer to righteousness (taqwa).",
-                        ur: "اے ایمان والو! اللہ کے لیے مضبوطی سے کھڑے رہو، انصاف کے گواہ بنو، اور کسی قوم کی دشمنی تمہیں انصاف سے نہ روکے۔ انصاف کرو، یہ تقویٰ کے زیادہ قریب ہے۔"
-                    }
-                },
-                {
-                    reference: "Surah Ash-Shura (42:37-40)",
-                    arabic: "وَٱلَّذِينَ يَجْتَنِبُونَ كَبَـٰٓئِرَ ٱلْإِثْمِ وَٱلْفَوَٰحِشَ وَإِذَا مَا غَضِبُوا۟ هُمْ يَغْفِرُونَ",
-                    translation: {
-                        en: "And those who avoid the major sins and immoralities, and when they are angry, they forgive.",
-                        ur: "اور جو بڑے گناہوں اور بےحیائیوں سے بچتے ہیں، اور جب غصہ آتا ہے تو معاف کر دیتے ہیں۔"
-                    }
-                },
-                {
-                    reference: "Surah Al-Hujurat (49:11-12)",
-                    arabic: "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ لَا يَسْخَرْ قَوْمٌۭ مِّن قَوْمٍ... وَلَا تَجَسَّسُوا۟ وَلَا يَغْتَب بَّعْضُكُم بَعْضًا",
-                    translation: {
-                        en: "O you who believe, let not a people ridicule another people... And do not spy or backbite each other.",
-                        ur: "اے ایمان والو! کوئی قوم دوسری قوم کا مذاق نہ اڑائے... اور جاسوسی نہ کرو اور نہ ایک دوسرے کی غیبت کرو۔"
-                    }
-                }
-            ]
         },
 
         // CONCLUSION
